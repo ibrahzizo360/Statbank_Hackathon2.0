@@ -4,11 +4,16 @@ import streamlit as st
 
 from urllib.request import urlopen
 import json
-with urlopen('https://raw.githubusercontent.com/virgoaugustine/Ghana-GeoJSON-data/master/ghana_regions.json') as response:
+# with urlopen('https://raw.githubusercontent.com/virgoaugustine/Ghana-GeoJSON-data/master/ghana_regions.json') as response:
+#     counties = json.load(response)
+
+with urlopen('https://raw.githubusercontent.com/ibrahzizo360/Statbank_Hackathon2.0/Aziz/ghana.geojson') as response:
     counties = json.load(response)
+
+
     
-for k,v in counties.items():
-    st.write(v)    
+# for k,v in counties.items():
+#     st.write(v)    
 
 import pandas as pd
 
@@ -21,10 +26,10 @@ fig = px.choropleth(df, geojson=counties, locations='Region', color='unemp',
                            color_continuous_scale="Viridis",
                            range_color=(0, 12),
                            scope="africa",
-                           featureidkey="properties.region",
+                           featureidkey="properties.name",
                            labels={'unemp':'Unemployment rate'}
                           )
-fig.update_geos(fitbounds="locations", visible=False)
+# fig.update_geos(fitbounds="locations", visible=False)
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 st.plotly_chart(fig)
